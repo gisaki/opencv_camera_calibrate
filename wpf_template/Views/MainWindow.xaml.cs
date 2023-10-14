@@ -13,16 +13,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace wpf_template
+namespace wpf_template.Views
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック
     /// </summary>
     public partial class MainWindow : Window
     {
+        public ViewModels.MainWindowViewModel ViewModel { get; private set; }
+
         public MainWindow()
         {
             InitializeComponent();
+            this.ViewModel = new ViewModels.MainWindowViewModel(this);
+            this.DataContext = this.ViewModel;
         }
     }
 }

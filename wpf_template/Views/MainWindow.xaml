@@ -1,0 +1,25 @@
+﻿<Window x:Class="wpf_template.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:wpf_template"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel>
+            <Button Content="DoSomething" Command="{Binding DoSomethingCommand}"/>
+            <TextBox Text="{Binding some_model_.TimeStamp}" />
+            <ListView ItemsSource="{Binding list_}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=TimeStamp, StringFormat='yyyy/MM/dd HH:mm:ss.fff'}">
+                            <GridViewColumnHeader Padding="10,0" Content="TimeStamp" Tag="TimeStamp"/>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+        </StackPanel>
+    </Grid>
+</Window>
