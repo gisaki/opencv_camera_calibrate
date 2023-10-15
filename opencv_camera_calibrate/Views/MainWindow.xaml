@@ -2,25 +2,32 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:opencv_camera_calibrate"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <StackPanel>
-            <Button Content="DoSomething" Command="{Binding DoSomethingCommand}"/>
-            <Image Source="{Binding SomeImage}" />
-            <TextBox Text="{Binding some_model_.TimeStamp}" />
-            <ListView ItemsSource="{Binding list_}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=TimeStamp, StringFormat='yyyy/MM/dd HH:mm:ss.fff'}">
-                            <GridViewColumnHeader Padding="10,0" Content="TimeStamp" Tag="TimeStamp"/>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel 
+            Grid.Row="0"
+            >
+            <Button Content="DoSomething" Command="{Binding DoSomethingCommand}"/>
+            <TextBox Text="{Binding image_.Filepath}" />
+            <TextBox Text="{Binding image_.ErrorMessage}" />
         </StackPanel>
+        <Image
+            Grid.Row="1"
+            Source="{Binding image_.BitmapSource}"
+            Stretch="Uniform"
+            dd:DragDrop.IsDropTarget="True"
+            dd:DragDrop.DropHandler="{Binding}"
+        />
     </Grid>
 </Window>

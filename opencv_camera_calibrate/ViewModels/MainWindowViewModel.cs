@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Media.Imaging;
-using OpenCvSharp;
+using GongSolutions.Wpf.DragDrop;
 
 namespace opencv_camera_calibrate.ViewModels
 {
-    public class MainWindowViewModel : Helpers.Observable
+    public class MainWindowViewModel : Helpers.Observable, GongSolutions.Wpf.DragDrop.IDropTarget
     {
         public Views.MainWindow View { get; private set; }
 
@@ -23,25 +21,11 @@ namespace opencv_camera_calibrate.ViewModels
             // 
             // データやプロパティの初期状態
             // 
-            this.list_ = new System.Collections.ObjectModel.ObservableCollection<Models.SomeModel>();
-            this.list_.Add(new Models.SomeModel() { TimeStamp = DateTime.Now.AddHours(1), });
-            this.list_.Add(new Models.SomeModel() { TimeStamp = DateTime.Now.AddHours(2), });
-            this.some_model_ = new Models.SomeModel() { TimeStamp = DateTime.Now, };
+            this.image_ = new Models.ImageCalibration() { };
         }
 
         // プロパティ（画面にbinding）
-        public Models.SomeModel some_model_ { get; set; }
-        public System.Collections.ObjectModel.ObservableCollection<Models.SomeModel> list_ { get; set; }
-        private BitmapSource _someImage;
-        public BitmapSource SomeImage
-        {
-            get { return this._someImage; }
-            set
-            {
-                // Setter で表示更新と連動させる仕組み
-                this.Set(ref this._someImage, value);
-            }
-        }
+        public Models.ImageCalibration image_ { get; set; }
 
         // コマンド（画面にbinding）
         private Helpers.RelayCommand _doSomethingCommand;
@@ -57,36 +41,41 @@ namespace opencv_camera_calibrate.ViewModels
         {
             this.View.Dispatcher.Invoke((Action)(() =>
             {
-                Models.SomeModel item = new Models.SomeModel() { TimeStamp = DateTime.Now.AddHours(1), };
-                this.list_.Add(item);
             }));
-            TestOpenCV();
         }
 
         // 操作
-        [System.Runtime.InteropServices.DllImport("gdi32.dll")]
-        public static extern bool DeleteObject(IntPtr hObject);
-        private void TestOpenCV()
+        public void DragOver(IDropInfo dropInfo)
         {
-            // 画像を読み込む
-            Mat src = new Mat(@"Parrots.jpg", ImreadModes.Grayscale);
+            var files = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>();
+            dropInfo.Effects = files.Any(fname => 
+                (
+                    fname.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                    fname.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                    fname.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+                )
+            ) ? DragDropEffects.Copy : DragDropEffects.None;
+        }
 
-            // 二値化後画像
-            Mat dst = src.Clone();
+        public void Drop(IDropInfo dropInfo)
+        {
+            var files = ((DataObject)dropInfo.Data).GetFileDropList().Cast<string>()
+                .Where(fname => 
+                    (
+                    fname.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase) ||
+                    fname.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase) ||
+                    fname.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+                    )
+                ).ToList();
 
-            // 二値化
-            Cv2.Threshold(src, dst, 0, 255, ThresholdTypes.Otsu);
+            if (files.Count == 0) return;
 
-            // 表示する画像
-            Bitmap bitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(dst);
-
-            // 表示
-            IntPtr hbitmap = bitmap.GetHbitmap();
-            this.SomeImage = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hbitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-            DeleteObject(hbitmap);
-
-            //メモリクリア
-            bitmap.Dispose();
+            foreach (var file in files)
+            {
+                // 先頭だけ
+                this.image_.LoadNewFile(file);
+                break;
+            }
         }
 
     }

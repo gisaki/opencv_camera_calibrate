@@ -37,6 +37,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GongSolutions.WPF.DragDrop, Version=3.0.0.0, Culture=neutral, PublicKeyToken=91f1945125b7a587, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\gong-wpf-dragdrop\GongSolutions.WPF.DragDrop.dll</HintPath>
+    </Reference>
     <Reference Include="OpenCvSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\OpenCvSharp.dll</HintPath>
@@ -80,7 +84,7 @@
     </Compile>
     <Compile Include="Helpers\Observable.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
-    <Compile Include="Models\SomeModel.cs" />
+    <Compile Include="Models\ImageCalibration.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -117,6 +121,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="lib\gong-wpf-dragdrop\GongSolutions.WPF.DragDrop.dll" />
+    <Resource Include="lib\gong-wpf-dragdrop\GongSolutions.WPF.DragDrop.xml" />
     <Content Include="lib\OpenCvSharp\OpenCvSharp.dll" />
     <Content Include="lib\OpenCvSharp\OpenCvSharp.Extensions.dll" />
     <Content Include="lib\OpenCvSharp\OpenCvSharp.Extensions.pdb" />
