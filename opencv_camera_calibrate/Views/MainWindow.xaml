@@ -9,6 +9,7 @@
     <Grid>
         <StackPanel>
             <Button Content="DoSomething" Command="{Binding DoSomethingCommand}"/>
+            <Image Source="{Binding SomeImage}" />
             <TextBox Text="{Binding some_model_.TimeStamp}" />
             <ListView ItemsSource="{Binding list_}">
                 <ListView.View>

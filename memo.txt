@@ -1,0 +1,56 @@
+■ opencv
+
+https://github.com/opencv/opencv/releases
+からダウンロードする
+
+展開する
+
+Visual Studio 2017 は vc15 なので、最新は vc15 を含まないので採用しない。
+
+また、Visual Studio 2017 で NET Framework 4.6.1 を使用する予定なので、
+OpenCvSharp が含む .net のバージョンとの兼ね合いで、古いバージョンを使用することにする。
+
+https://github.com/opencv/opencv/releases/download/4.5.3/opencv-4.5.3-vc14_vc15.exe
+
+vc15 フォルダの中を使用する
+x64を使用する（もう32bitは対象外でよいかな、と。ややこしいので64bitに統一する）
+
+■ OpenCvSharp
+
+https://github.com/shimat/opencvsharp/releases
+
+からダウンロードする
+
+展開する
+
+opencvとバージョンを合わせる
+
+https://github.com/shimat/opencvsharp/releases/download/4.5.3.20211228/OpenCvSharp-4.5.3-20211228.zip
+
+OpenCvSharpを展開してdll、xml、pdbファイルの一式をプロジェクトに追加する
+どこまで必要かわからないのでひとまず全部
+
+x64を使用する（もう32bitは対象外でよいかな、と。ややこしいので64bitに統一する）
+
+
+「出力ディレクトリにコピー」に「新しい場合はコピーする」を設定する対象は、実行時に不足する物を後で追加
+・OpenCvSharpExtern.dll
+
+参照の追加は以下を対象
+・OpenCvSharp.dll
+・OpenCvSharp.Extensions.dll
+・OpenCvSharp.WpfExtensions.dll
+
+※ 以下は追加不要（できない）
+・OpenCvSharpExtern.dll
+
+
+■メモ
+（１）
+BadImageFormatException: 間違ったフォーマットのプログラムを読み込もうとしました。 (HRESULT からの例外:0x8007000B)
+
+プロジェクト名を右クリックし、プロパティを選択
+左側のタブからビルドを選択、「32ビットを優先」のチェックを外す
+DebugとReleaseの両方の構成で同様に処置
+
+

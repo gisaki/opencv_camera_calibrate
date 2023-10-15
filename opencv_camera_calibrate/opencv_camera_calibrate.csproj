@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,10 +34,24 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenCvSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\OpenCvSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.Extensions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=6adad1e807fea099, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\OpenCvSharp.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenCvSharp.WpfExtensions, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\OpenCvSharp.WpfExtensions.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -90,6 +105,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="lib\OpenCvSharp\OpenCvSharp.dll.config" />
+    <None Include="lib\opencv\opencv_world453.lib" />
+    <None Include="lib\opencv\opencv_world453d.lib" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -98,6 +116,22 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="lib\OpenCvSharp\OpenCvSharp.dll" />
+    <Content Include="lib\OpenCvSharp\OpenCvSharp.Extensions.dll" />
+    <Content Include="lib\OpenCvSharp\OpenCvSharp.Extensions.pdb" />
+    <Resource Include="lib\OpenCvSharp\OpenCvSharp.Extensions.xml" />
+    <Content Include="lib\OpenCvSharp\OpenCvSharp.pdb" />
+    <Content Include="lib\OpenCvSharp\OpenCvSharp.WpfExtensions.dll" />
+    <Content Include="lib\OpenCvSharp\OpenCvSharp.WpfExtensions.pdb" />
+    <Resource Include="lib\OpenCvSharp\OpenCvSharp.WpfExtensions.xml" />
+    <Resource Include="lib\OpenCvSharp\OpenCvSharp.xml" />
+    <Content Include="lib\OpenCvSharp\OpenCvSharpExtern.dll" />
+    <Content Include="lib\OpenCvSharp\OpenCvSharpExtern.pdb" />
+    <Content Include="lib\opencv\opencv_world453.dll" />
+    <Content Include="lib\opencv\opencv_world453.pdb" />
+    <Content Include="lib\opencv\opencv_world453d.dll" />
+    <Content Include="lib\opencv\opencv_world453d.pdb" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
