@@ -21,6 +21,42 @@
             <Button Content="DoSomething" Command="{Binding DoSomethingCommand}"/>
             <TextBox Text="{Binding image_.Filepath}" />
             <TextBox Text="{Binding image_.ErrorMessage}" />
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="k1" />
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="k2" />
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="p1" />
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="p2" />
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="k3" />
+
+                <Slider Grid.Row="0" Grid.Column="1" x:Name="slider_k1" Value="{Binding param_k1_.v}" TickFrequency="0.01" IsSnapToTickEnabled="True" Minimum="-1.00" Maximum="1.00" SmallChange="0.01" LargeChange="0.10" />
+                <Slider Grid.Row="1" Grid.Column="1" x:Name="slider_k2" Value="{Binding param_k2_.v}" TickFrequency="0.01" IsSnapToTickEnabled="True" Minimum="-1.00" Maximum="1.00" SmallChange="0.01" LargeChange="0.10" />
+                <Slider Grid.Row="2" Grid.Column="1" x:Name="slider_p1" Value="{Binding param_p1_.v}" TickFrequency="0.01" IsSnapToTickEnabled="True" Minimum="-0.20" Maximum="0.20" SmallChange="0.01" LargeChange="0.02" />
+                <Slider Grid.Row="3" Grid.Column="1" x:Name="slider_p2" Value="{Binding param_p2_.v}" TickFrequency="0.01" IsSnapToTickEnabled="True" Minimum="-0.20" Maximum="0.20" SmallChange="0.01" LargeChange="0.02" />
+                <Slider Grid.Row="4" Grid.Column="1" x:Name="slider_k3" Value="{Binding param_k3_.v}" TickFrequency="0.01" IsSnapToTickEnabled="True" Minimum="-1.00" Maximum="1.00" SmallChange="0.01" LargeChange="0.10" />
+
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="{Binding param_k1_.str}" />
+                <TextBlock Grid.Row="1" Grid.Column="2" Text="{Binding param_k2_.str}" />
+                <TextBlock Grid.Row="2" Grid.Column="2" Text="{Binding param_p1_.str}" />
+                <TextBlock Grid.Row="3" Grid.Column="2" Text="{Binding param_p2_.str}" />
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="{Binding param_k3_.str}" />
+                <TextBlock Grid.Row="4" Grid.Column="2" Text="-0.000" Visibility="Hidden"/>
+
+            </Grid>
+
         </StackPanel>
         <Image
             Grid.Row="1"

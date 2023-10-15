@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Imaging;
 using OpenCvSharp;
@@ -17,7 +13,7 @@ namespace opencv_camera_calibrate.Models
         public ImageCalibration()
         {
             // デフォルト
-            this.LoadNewFile(@"sample_480_x_360_k1[-0.3]_k3[-0.05]_p1[0.03].png");
+            this.LoadNewFile(@"sample_480_x_360_k1[-0.3]_k3[-0.05]_p1[0.03].png", 0, 0, 0, 0, 0);
         }
 
         // プロパティ
@@ -55,37 +51,57 @@ namespace opencv_camera_calibrate.Models
         }
 
         // 操作
-        public void LoadNewFile(String filepath)
+        public void LoadNewFile(String filepath, double k1, double k2, double p1, double p2, double k3)
         {
             this.Filepath = filepath;
-            this.OpenCVTest();
+            this.OpenCVTest(k1, k2, p1, p2, k3);
+        }
+        public void Update(double k1, double k2, double p1, double p2, double k3)
+        {
+            this.OpenCVTest(k1, k2, p1, p2, k3);
         }
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]
         public static extern bool DeleteObject(IntPtr hObject);
-        private void OpenCVTest()
+        private void OpenCVTest(double k1, double k2, double p1, double p2, double k3)
         {
             this.ErrorMessage = String.Empty;
             try
             {
-                // 画像を読み込む
-                Mat src = new Mat(this.Filepath, ImreadModes.Grayscale);
+                Mat src = Cv2.ImRead(this.Filepath, ImreadModes.Color);
 
-                // 二値化後画像
-                Mat dst = src.Clone();
+                {
+                    int w = src.Size().Width;
+                    int h = src.Size().Height;
 
-                // 二値化
-                Cv2.Threshold(src, dst, 0, 255, ThresholdTypes.Otsu);
+                    int fx = w;
+                    int fy = w; //  hかな？
+                    double Cx = w / 2.0;
+                    double Cy = h / 2.0;
 
-                // 表示する画像
-                Bitmap bitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(dst);
+                    double[] array_mtx = { fx, 0, Cx, 0, fy, Cy, 0, 0, 1 };
+                    Mat mtx = new Mat<double>(3, 3, array_mtx);
 
-                // 表示
-                IntPtr hbitmap = bitmap.GetHbitmap();
-                this.BitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hbitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
-                DeleteObject(hbitmap);
+                    double[] array_dist = { k1, k2, p1, p2, k3 };
+                    Mat dist = new Mat<double>(5, 1, array_dist);
 
-                //メモリクリア
-                bitmap.Dispose();
+                    // Refining the camera matrix using parameters obtained by calibration
+                    // ROI:Region Of Interest(対象領域)
+                    var newcameramtx = Cv2.GetOptimalNewCameraMatrix(mtx, dist, src.Size(), 1, src.Size(), out OpenCvSharp.Rect validPixROI);
+
+                    Mat calib = new Mat();
+                    Cv2.Undistort(src, calib, mtx, dist, newcameramtx);
+
+                    // 表示する画像
+                    Bitmap bitmap = OpenCvSharp.Extensions.BitmapConverter.ToBitmap(calib);
+
+                    // 表示
+                    IntPtr hbitmap = bitmap.GetHbitmap();
+                    this.BitmapSource = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(hbitmap, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+                    DeleteObject(hbitmap);
+
+                    //メモリクリア
+                    bitmap.Dispose();
+                }
             }
             catch (Exception e)
             {
