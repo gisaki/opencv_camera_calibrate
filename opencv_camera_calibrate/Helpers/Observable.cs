@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace wpf_template.Helpers
+namespace opencv_camera_calibrate.Helpers
 {
     public class Observable : INotifyPropertyChanged
     {

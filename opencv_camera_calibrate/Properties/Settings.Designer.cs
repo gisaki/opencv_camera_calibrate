@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace wpf_template.Properties
+namespace opencv_camera_calibrate.Properties
 {
 
 

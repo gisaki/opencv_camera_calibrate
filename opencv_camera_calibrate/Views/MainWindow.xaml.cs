@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace wpf_template.Views
+namespace opencv_camera_calibrate.Views
 {
     /// <summary>
     /// MainWindow.xaml の相互作用ロジック

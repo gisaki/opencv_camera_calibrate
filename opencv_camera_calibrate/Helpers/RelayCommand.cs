@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace wpf_template.Helpers
+namespace opencv_camera_calibrate.Helpers
 {
     public class RelayCommand : ICommand
     {

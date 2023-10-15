@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace wpf_template.Models
+namespace opencv_camera_calibrate.Models
 {
     // 何らかのデータ
     public class SomeModel : Helpers.Observable

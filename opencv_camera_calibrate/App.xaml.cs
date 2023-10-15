@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace wpf_template
+namespace opencv_camera_calibrate
 {
     /// <summary>
     /// App.xaml の相互作用ロジック

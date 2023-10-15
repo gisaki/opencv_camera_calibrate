@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace wpf_template.ViewModels
+namespace opencv_camera_calibrate.ViewModels
 {
     public class MainWindowViewModel : Helpers.Observable
     {
