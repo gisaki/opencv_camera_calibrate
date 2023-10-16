@@ -81,6 +81,12 @@ namespace opencv_camera_calibrate.ViewModels
         {
             this.View.Dispatcher.Invoke((Action)(() =>
             {
+                // リセット
+                this.param_k1_.v = 0;
+                this.param_k2_.v = 0;
+                this.param_p1_.v = 0;
+                this.param_p2_.v = 0;
+                this.param_k3_.v = 0;
             }));
         }
 

@@ -18,7 +18,7 @@
         <StackPanel 
             Grid.Row="0"
             >
-            <Button Content="DoSomething" Command="{Binding DoSomethingCommand}"/>
+            <Button Content="Reset" Command="{Binding DoSomethingCommand}"/>
             <TextBox Text="{Binding image_.Filepath}" />
             <TextBox Text="{Binding image_.ErrorMessage}" />
 

@@ -145,6 +145,11 @@ namespace opencv_camera_calibrate.Models
             try
             {
                 Mat src = Cv2.ImRead(param.Filepath, ImreadModes.Color);
+                if (src.Size().Width <= 0 || src.Size().Height <= 0)
+                {
+                    // 多分読み込み失敗
+                    src = GenDummyBitmap();
+                }
 
                 {
                     int w = src.Size().Width;
@@ -184,6 +189,24 @@ namespace opencv_camera_calibrate.Models
             {
                 this.ErrorMessage = e.ToString();
             }
+        }
+        private Mat GenDummyBitmap()
+        {
+            // ダミー画像
+            int SIZE = 48;
+            Bitmap bitmap = new Bitmap(SIZE * 20, SIZE * 20);
+            Graphics g = Graphics.FromImage(bitmap);
+            RectangleF rect = new Rectangle(0, 0, SIZE * 20, SIZE * 20);
+            g.FillRectangle(Brushes.LightBlue, rect);
+            Font fnt = new Font("Arial", SIZE);
+            g.DrawString(@"Failed to open        ", fnt, Brushes.DarkBlue, 0, (SIZE * 0.0f));
+            g.DrawString(@"image file            ", fnt, Brushes.DarkBlue, 0, (SIZE * 2.0f));
+            g.DrawString(@"Drop your .jpg or .png", fnt, Brushes.DarkBlue, 0, (SIZE * 4.0f));
+            g.DrawString(@"file here             ", fnt, Brushes.DarkBlue, 0, (SIZE * 6.0f));
+            // リソース解放
+            fnt.Dispose();
+            g.Dispose();
+            return OpenCvSharp.Extensions.BitmapConverter.ToMat(bitmap);
         }
 
     }
